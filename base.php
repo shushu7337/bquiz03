@@ -20,7 +20,7 @@ class DB{
             foreach( $arg[0] as $key => $value ){
                 $tmp[]=sprintf("`%s`='%s'",$key,$value);
             }
-            $sql = $sql . " where " . impolde(" && ",$tmp);
+            $sql = $sql . " where " . implode(" && ",$tmp);
         }
         if(!empty($arg[1])){
             $sql = $sql . $arg[1];
