@@ -3,7 +3,7 @@ date_default_timezone_set("Asia/Taipei");
 session_start();
 
 class DB{
-    private $dsn="myhost=localhost;charset=utf8;dbname=db07";
+    private $dsn="mysql:host=localhost;charset=utf8;dbname=db07";
     private $root="root";
     private $password="";
     private $table;
@@ -11,7 +11,7 @@ class DB{
 
     public function __construct($table){
         $this->table =$table;
-        $this->pdo =new PDO($this->dsn,$this->root,$this->password);
+        $this->pdo=new PDO($this->dsn,$this->root,$this->password);
     }
 
     public function all(...$arg){
