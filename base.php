@@ -1,6 +1,12 @@
 <?php
 date_default_timezone_set("Asia/Taipei");
 session_start();
+$level=[
+    1=>'普遍級',
+    2=>'輔導級',
+    3=>'保護級',
+    4=>'限制級'
+];
 
 class DB{
     private $dsn="mysql:host=localhost;charset=utf8;dbname=db07";
@@ -35,7 +41,7 @@ class DB{
             foreach( $arg[0] as $key => $value ){
                 $tmp[]=sprintf("`%s`='%s'",$key,$value);
             }
-            $sql = $sql . " where " . impolde(" && ",$tmp);
+            $sql = $sql. " where " .implode(" && ",$tmp);
         }
         if(!empty($arg[1])){
             $sql = $sql . $arg[1];
@@ -50,7 +56,7 @@ class DB{
             foreach( $arg as $key => $value ){
                 $tmp[]=sprintf("`%s`='%s'",$key,$value);
             }
-            $sql = $sql . " where " . impolde(" && ",$tmp);
+            $sql = $sql . " where " . implode(" && ",$tmp);
         }else{
             $sql = $sql . " where `id` = '$arg'";
         }
@@ -64,7 +70,7 @@ class DB{
             foreach( $arg as $key => $value ){
                 $tmp[]=sprintf("`%s`='%s'",$key,$value);
             }
-            $sql = $sql . " where " . impolde(" && ",$tmp);
+            $sql = $sql . " where " . implode(" && ",$tmp);
         }else{
             $sql = $sql . " where `id` = '$arg'";
         }

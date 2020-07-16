@@ -135,7 +135,7 @@
             $(next).show();
             $(next).animate({width:200,height:260,left:0,top:0})
             $(dom).hide()
-            $(dom).css({width:200,height:200,left:0,top:0})
+            $(dom).css({width:200,height:260,left:0,top:0})
 
           })
       }
@@ -183,15 +183,61 @@
     }
     </script>
 
+    <style>
+      .mb{
+        width: 48%;
+        height: 160px;
+        display: inline-block;
+      }
+    </style>
     <!-- 院線片 -->
     <div class="half">
       <h1>院線片清單</h1>
       <div class="rb tab" style="width:95%;">
-        <table>
-          <tbody>
-            <tr> </tr>
-          </tbody>
-        </table>
-        <div class="ct"> </div>
+      <?php
+        $db=new DB("movie");
+        $today=date("Y-m-d"); //取得今天日期
+        $ondate=date("Y-m-d",strtotime("-2 days"));  //上印日期為今天往前推兩天
+        $total=$db->count(['sh'=>1]," && ondate >= '$ondate' && ondate <='$today'");
+        $div=4;
+        $pages=ceil($total/$div);
+        $now=(!empty($_GET['p']))?$_GET['p']:1;
+        $start=($now-1)*$div;
+        $rows=$db->all(['sh'=>1]," && ondate >= '$ondate' && ondate <='$today' order by rank limit $start,$div");  //撈出有顯示的並做排序
+
+        foreach($rows as $row){
+      ?>
+          <div class="mb">
+              <table>
+                <tr>
+                  <td rowspan="3"><a href="?do=intro&id=<?=$row['id'];?>"><img src="img/<?=$row['poster'];?>" style="height:100px;width:80px;"></a></td>
+                  <td><?=$row['name'];?></td>
+                </tr>
+                <tr>
+                  <td><img src="icon/<?=$row['level'];?>.png" style="width:15px"><?=$level[$row['level']];?></td>
+                </tr>
+                <tr>
+                  <td><?=$row['ondate'];?></td>
+                </tr>
+              </table>
+              <div class="ct">
+                <button>劇情簡介</button>
+                <button>線上訂票</button>
+              </div>
+          </div>
+      <?php
+        }
+      ?>
+      <!-- 換頁功能 -->
+        <div class="ct">
+        <?php
+          for($i=1;$i<=$pages;$i++){
+            $font=($i==$now)?'24px':'18px';
+            echo "<a href='?p=$i' style='font-size:$font;text-decoration:none'> $i </a>";
+          }
+
+
+        ?>
+        </div>
       </div>
     </div>
