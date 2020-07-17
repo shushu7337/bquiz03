@@ -10,7 +10,7 @@
                     $db=new DB("movie");
                     $today=date("Y-m-d"); //取得今天日期
                     $ondate=date("Y-m-d",strtotime("-2 days"));  //上印日期為今天往前推兩天
-                    $rows=$db->all(['sh'=>1]," && ondate >= '$ondate' && ondate <='$today' ");  //撈出有顯示的並做排序+
+                    $rows=$db->all(['sh'=>1]," && ondate >= '$ondate' && ondate <='$today' ");  //撈出有顯示的
                     foreach($rows as $row){
                         // 做進入訂票系統的判斷，如果是從清單點入的話會直接顯示該電影的id內容，如果是從線上訂票進入會顯示第一個
                         if(!empty($_GET['id'])){

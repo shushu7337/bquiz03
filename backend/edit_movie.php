@@ -51,7 +51,7 @@ $row=$db->find($_GET['id']);
                     <select name="month">
                     <?php
                             for($i=1;$i<=12;$i++){
-                                // mb_substr($row['ondate'],5,2,'utf8')
+                                /* mb_substr($row['ondate'],5,2,'utf8') */
                                 $isSelected=(date("m",strtotime($row['ondate']))==$i)?'selected':''; 
                                 echo "<option value='$i' $isSelected>";
                                 echo $i;
