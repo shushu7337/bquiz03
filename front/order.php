@@ -49,9 +49,15 @@
 // 載入畫面的時候直接讀取當前的id=movie的value值
 getDuration();
 
-// 監聽事件
+
+// ------監聽事件------
+// 改變觸發後得到date的值
 $("#movie").on("change",function(){
     getDuration();
+})
+// 改變觸發後得到session的值
+$("#date").on("change",function(){
+    getSession();
 })
 
 function getDuration(){
@@ -59,9 +65,19 @@ function getDuration(){
 
     $.get("api/get_duration.php",{id},function(duration){   //將選擇的值更改並回傳到api/get_duration.php
         $("#date").html(duration)
+        getSession();
     })
-    console.log(id);
+    // console.log(id,"d");
 }
 
+function getSession(){
+    let date=$("#date").val();  //取得日期
+    let id=$("#movie").val();   //取得電影
+
+    $.get("api/get_session.php",{date,id},function(session){
+        $("#session").html(session);
+    })
+    // console.log(id);
+}
 
 </script>
