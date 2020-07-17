@@ -38,6 +38,7 @@ $rows=$db->all([]," order by `rank`");
 foreach($rows as $k => $row){   //$k為索引值
     $isChecked=($row['sh']==1)?"checked":"";
 
+    // 找出排序後的上一筆和下一筆的資料id
     $prev=($k!=0)?$rows[$k-1]['id']:$row['id']; //如果索引值$k不為0的話，就為$rows的[$k-1]的id值(上一筆的id)，否則為$row['id'](自己的id)
     $next=($k!=(count($rows)-1))?$rows[$k+1]['id']:$row['id']; //如果索引值$K不為總數-1的話，就為$rows的[$k+1]的id值(下一筆的id)，否則為$row['id'](自己的id)
 ?>
@@ -94,10 +95,13 @@ foreach($rows as $k => $row){   //$k為索引值
 </form>
 </div>
 <script>
+// 使用jquery來對button的點擊做處理
     $("button").on("click",function(){
+        // 取得data屬性的值，並拆成一個id陣列
         let id=$(this).data("rank").split("-"); //所點下的標籤的rank值以"-"來切開,會得到兩個型態為"字串的" id值
-        
+        // id陣列連同要修改的資料表名稱一起用ajax的方式一直傳到後台
         $.post("api/rank.php",{id,"table":"poster"},function(){ //function 為 callback function 前面的事情做完才來做function
+            // 後台api處理完畢後重新載入一次頁面
             location.reload();  //重整頁面
         })
     })
