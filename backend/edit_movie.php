@@ -40,10 +40,10 @@ $row=$db->find($_GET['id']);
                         <?php
                             for($i=0;$i<3;$i++){
                                 // mb_substr($row['ondate'],0,4,'utf8')
-                                $isSelected=(date("Y",strtotime($row['ondate']))==(date("Y")+1))?'selected':'';  
+                                $isSelected=(date("Y",strtotime($row['ondate']))==(date("Y")+$i))?'selected':'';  
                                 //將原先資料的年份資料個別轉出,並做判別，如果撈到的年份等於現在年份加1就顯示
                                 echo "<option value='".(date("Y")+$i)."' $isSelected>";
-                                echo date("Y")+$i;
+                                echo date("Y")+$i."-".$isSelected;
                                 echo "</option>";
                             }
                         ?>

@@ -14,7 +14,7 @@ foreach($rows as $k => $row){
             <div>
             <div>
                 <span>片名:<?=$row['name'];?></span>
-                <span>片長:<?=$row['length'];?></span>
+                <span>片長:<?=($row['length']);?></span>
                 <span>上映時間:<?=$row['ondate'];?></span>
             </div>
             <div>
