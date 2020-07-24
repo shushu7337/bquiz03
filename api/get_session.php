@@ -24,6 +24,7 @@ $ondate=strtotime($movie['ondate']);
 if(strtotime($movie_date)==$today){
 
     $now=floor((date("G")-12)/2);   //目前正在放映的場次時間(G為小時)//現在訂票的時間
+    $now=($now>0)?now:0;
     for($i=($now+1);$i<=5;$i++){    
         echo "<option value='$i'>".$sess[$i]."</option>";
     }
