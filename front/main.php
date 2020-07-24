@@ -1,4 +1,5 @@
 <style>
+/*建立所需的CSS內容*/
 .btns{
   display: flex;
 }
@@ -90,24 +91,25 @@
     </div>
     <script>
     // -------------照片的顯示-------------
-    $(".po").eq(0).show();
+    $(".po").eq(0).show();  //先顯示第一張預告片海報
     // 自動功能設定
-    let auto=setInterval(() => {
+    let auto=setInterval(() => {  //設定每三秒執行一次海報轉場的函式
       slider()
     }, 3000);
 
-    function slider(){ //
-      let dom=$(".po:visible"); //現在顯示的
+    function slider(){  //海報轉場函式
+      let dom=$(".po:visible"); //先取得目前頁面上正顯示的海報
       //let ani=$(dom).attr("data-ani");    ani 的性質要注意
-      let ani=$(dom).data('ani');   //
-      let next=$(dom).next(); //下一張
+      let ani=$(dom).data('ani');    //取得海報的轉場樣式
+      let next=$(dom).next();   //取得海報的下一張海報
       // console.log(dom,ani,next)
       
-      // 如果下一張dom的長度為0，把它設為第一張達到輪播效果
+      // 如果下一張dom的長度為0，把它設為第一張達到輪播效果(計算是否有下一張海報，如果沒有下一張海報則使用第一張海報)
       if(next.length<=0){
         next=$(".po").eq(0);
       }
 
+       //根據轉場樣式來執行轉場動畫
       switch(ani){
         case 1:
         // 透過回呼函式讓過場動畫更為順暢
@@ -129,7 +131,7 @@
           });
           break;
         case 4:
-        //縮放
+         //縮放,使用animate()函式來執行較細緻的轉場動畫，需要注意各須參數的變化關係，及動畫的先後順序
           $(dom).animate({width:0,height:0,left:100,top:130},function(){
             $(next).css({width:0,height:0,left:100,top:130})
             $(next).show();
@@ -141,14 +143,18 @@
       }
     }
     
-     // -------------照片的點擊更換-------------
+    //註冊下方icon的點擊事件
+    // -------------照片的點擊更換-------------
     $(".icon").on("click",function(){
       
+      //取得icon的索引值，並以此索引值來更換海報 
       let index=$(".icon").index($(this))
       $(".po").hide();  //全部隱藏
       $(".po").eq(index).show();  //重新播放
     })
 
+    //註冊滑鼠移入icon取的事件，取消interval事件，當滑鼠離開時再恢復interval事件
+    //以避免時間差的問題造成轉場動畫出錯
     $(".nav").hover(
         function(){
           clearInterval(auto)  //hover近來的時候
