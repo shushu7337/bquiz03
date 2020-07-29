@@ -59,7 +59,7 @@ foreach($orders as $ord){
             }
         ?>
     </li>
-    <li><button>刪除</button></li>
+    <li><button onclick="del('ord',<?=$ord['id'];?>)">刪除</button></li>
 </ul>
 <hr>
 <?php
@@ -67,3 +67,14 @@ foreach($orders as $ord){
 ?>
 </div>
 </div>
+
+<script>
+//刪除資料表資料的函式
+function del(movie,id){
+    if(confirm("是否確認刪除?")){
+        $.post("api/del.php",{"table":movie,"id":id},function(){      //如果參數本身有帶值的話送出的key值就會相同，如果沒有的話就給予一個字串  (字串:key值)
+            location.reload();  //重載頁面來確定是否有刪除
+        })         
+    }
+}
+</script>
