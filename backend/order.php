@@ -1,9 +1,9 @@
 <h3 class="ct">訂單清單</h3>
 <div>
 快速刪除:
-<input type="radio" name="bydate" id="bydate">
+<input type="radio" name="type" value="date">
 依日期<input type="text" name="date" id="date">
-<input type="radio" name="bymovie" id="bymovie">
+<input type="radio" name="type" value="movie">
 依電影
 <select name="movie" id="movie">
     <?php
@@ -13,7 +13,7 @@
         }
     ?>
 </select>
-<button>刪除</button>
+<button onclick="qDel()">刪除</button>
 </div>
 <div>
 <style>
@@ -75,6 +75,50 @@ function del(movie,id){
         $.post("api/del.php",{"table":movie,"id":id},function(){      //如果參數本身有帶值的話送出的key值就會相同，如果沒有的話就給予一個字串  (字串:key值)
             location.reload();  //重載頁面來確定是否有刪除
         })         
+    }
+}
+
+// 原先方法 
+
+// function qDel(){
+//     let type=$("input[name='type']:checked").val();
+//     // console.log(type);
+//     switch(type){
+//         case 'date':
+//             let date=$("#date").val();
+//             // console.log(date)
+//             $.post('api/qdel.php',{date},function(){
+//                 location.reload()
+//             })
+//         break;
+//         case 'movie':
+//             let movie=$("#movie").val();
+//             // console.log(movie)
+//             $.post('api/qdel.php',{movie},function(){
+//                 location.reload()
+//             })
+//         break;
+
+//     }
+// }
+
+//  方法 2
+function qDel(){
+    let type=$("input[name='type']:checked").val();
+    let option="";
+    switch(type){
+        case 'date':
+            option=$("#date").val();
+            
+        break;
+        case 'movie':
+            option=$("#movie").val();
+        break;
+    }
+    if(confirm("是否確定刪除"+option+"的所有訂單?")){
+        $.post('api/qdel.php',{type,option},function(){
+            location.reload()
+        })
     }
 }
 </script>
