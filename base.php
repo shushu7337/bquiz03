@@ -111,4 +111,6 @@ function to($url){
     header("location:".$url);
 }
 
+$Ord=new DB("ord");
+
 ?>
